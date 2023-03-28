@@ -14,9 +14,8 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public boolean put(K key, V value) {
         boolean rsl = false;
-        int bucket = key == null ? 0 : indexFor(hash(key.hashCode()));
-        if (table[bucket] == null) {
-            table[bucket] = new MapEntry<>(key, value);
+        if (table[bucket(key)] == null) {
+            table[bucket(key)] = new MapEntry<>(key, value);
             count++;
             modCount++;
             rsl = true;
@@ -31,42 +30,44 @@ public class SimpleMap<K, V> implements Map<K, V> {
         return hashCode ^ (hashCode >>> 16);
     }
 
+    private int bucket(K key) {
+        return key == null ? 0 : indexFor(hash(key.hashCode()));
+    }
+
     private int indexFor(int hash) {
-        return hash & (table.length - 1);
+        return hash & (capacity - 1);
+    }
+
+    private boolean keyCompare(K key) {
+        MapEntry<K, V> entry = table[bucket(key)];
+        return (entry != null
+                && Objects.hashCode(key) == Objects.hashCode(entry.key)
+                && Objects.equals(key, entry.key));
     }
 
     private void expand() {
         MapEntry<K, V>[] oldTable = table;
-        capacity = oldTable.length * 2;
+        capacity *= 2;
         table = new MapEntry[capacity];
         count = 0;
         modCount = 0;
         for (MapEntry<K, V> entry : oldTable) {
             if (entry != null) {
-                put(entry.key, entry.value);
+                table[bucket(entry.key)] = entry;
             }
         }
     }
 
     @Override
     public V get(K key) {
-        int bucket = key == null ? 0 : indexFor(hash(key.hashCode()));
-        MapEntry<K, V> entry = table[bucket];
-        return (entry != null
-                && Objects.hashCode(key) == Objects.hashCode(entry.key)
-                && Objects.equals(key, entry.key))
-                ? entry.value : null;
+        return keyCompare(key) ? table[bucket(key)].value : null;
     }
 
     @Override
     public boolean remove(K key) {
         boolean rsl = false;
-        int bucket = key == null ? 0 : indexFor(hash(key.hashCode()));
-        MapEntry<K, V> entry = table[bucket];
-        if (entry != null
-                && Objects.hashCode(key) == Objects.hashCode(entry.key)
-                && Objects.equals(key, entry.key)) {
-            table[bucket] = null;
+        if (keyCompare(key)) {
+            table[bucket(key)] = null;
             count++;
             modCount--;
             rsl = true;

@@ -6,6 +6,7 @@ import java.util.*;
 import static org.assertj.core.api.Assertions.*;
 
 class SimpleMapTest {
+
     private final SimpleMap<Integer, String> map = new SimpleMap<>();
 
     @BeforeEach
