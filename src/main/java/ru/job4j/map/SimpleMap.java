@@ -83,13 +83,13 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
             @Override
             public boolean hasNext() {
-                while (point < table.length - 1 && table[point] == null) {
-                    point++;
-                }
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                return point < table.length && table[point] != null;
+                while (point < table.length && table[point] == null) {
+                    point++;
+                }
+                return point < table.length;
             }
 
             @Override
