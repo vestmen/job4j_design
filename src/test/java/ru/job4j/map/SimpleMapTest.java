@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.*;
 
 class SimpleMapTest {
 
-    private final SimpleMap<Integer, String> map = new SimpleMap<>();
+    private final SimpleMap<Integer, String> map = new SimpleMap<Integer, String>();
 
     @BeforeEach
     void setUp() {
@@ -124,28 +124,28 @@ class SimpleMapTest {
 
     @Test
     void whenCheckPutZeroAndNull() {
-        SimpleMap<Integer, String> map = new SimpleMap<>();
+        SimpleMap<Integer, String> map = new SimpleMap<Integer, String>();
         assertThat(map.put(null, "0000")).isTrue();
         assertThat(map.put(0, "0")).isFalse();
     }
 
     @Test
     void whenCheckPutNullAndZero() {
-        SimpleMap<Integer, String> map = new SimpleMap<>();
+        SimpleMap<Integer, String> map = new SimpleMap<Integer, String>();
         assertThat(map.put(0, "0")).isTrue();
         assertThat(map.put(null, "0000")).isFalse();
     }
 
     @Test
     void whenCheckGetZeroAndNull() {
-        SimpleMap<Integer, String> map = new SimpleMap<>();
+        SimpleMap<Integer, String> map = new SimpleMap<Integer, String>();
         assertThat(map.put(null, "0000")).isTrue();
         assertThat(map.get(0)).isNull();
     }
 
     @Test
     void whenCheckGetNullAndZero() {
-        SimpleMap<Integer, String> map = new SimpleMap<>();
+        SimpleMap<Integer, String> map = new SimpleMap<Integer, String>();
         assertThat(map.put(0, "0")).isTrue();
         assertThat(map.get(null)).isNull();
     }
