@@ -13,7 +13,7 @@ public class LogFilter {
             rsl = in.lines()
                     .filter(a -> {
                         String[] words = a.split(" ");
-                        return words[words.length - 2].equals("404");
+                        return "404".equals(words[words.length - 2]);
                     })
                     .toList();
         } catch (IOException e) {
