@@ -22,10 +22,9 @@ public class Config {
                     .filter(a -> !a.isEmpty() && !a.contains("#"))
                     .forEach(a -> {
                         String[] words = a.split("=", 2);
-                        if (!a.contains("=")
-                                || words[0].equals("")
-                                || words[1].equals("")) {
-                            throw new IllegalArgumentException("All lines must be of the form: key=value");
+                        if (!a.contains("=") || checkString(words)) {
+                            throw new IllegalArgumentException(
+                                    String.format("Line %s must be of the form: key=value", a));
                         }
                         values.put(words[0], words[1]);
             });
@@ -34,8 +33,13 @@ public class Config {
         }
     }
 
+    public boolean checkString(String[] str) {
+        return str[0].isEmpty() || str[1].isEmpty();
+    }
+
     public String value(String key) {
-        return values.getOrDefault(key, "There is no such key");
+        return values.getOrDefault(key,
+                String.format("There is no such key: %s", key));
     }
 
     @Override

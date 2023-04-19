@@ -11,7 +11,7 @@ class ConfigTest {
         Config config = new Config(path);
         config.load();
         assertThat(config.value("name")).isEqualTo("Petr Arsentev");
-        assertThat(config.value("surname")).isEqualTo("There is no such key");
+        assertThat(config.value("surname")).isEqualTo("There is no such key: surname");
     }
 
     @Test
@@ -27,10 +27,10 @@ class ConfigTest {
         String path = "./data/comments_with_empty_strings.properties";
         Config config = new Config(path);
         config.load();
-        assertThat(config.value("#Comment1")).isEqualTo("There is no such key");
-        assertThat(config.value("#Comment2")).isEqualTo("There is no such key");
-        assertThat(config.value("#Empty Strings")).isEqualTo("There is no such key");
-        assertThat(config.value(null)).isEqualTo("There is no such key");
+        assertThat(config.value("#Comment1")).isEqualTo("There is no such key: #Comment1");
+        assertThat(config.value("#Comment2")).isEqualTo("There is no such key: #Comment2");
+        assertThat(config.value("#Empty Strings")).isEqualTo("There is no such key: #Empty Strings");
+        assertThat(config.value(null)).isEqualTo("There is no such key: null");
     }
 
     @Test
@@ -39,7 +39,7 @@ class ConfigTest {
         Config config = new Config(path);
         assertThatThrownBy(config::load)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("All lines must be of the form: key=value");
+                .hasMessage("Line name= must be of the form: key=value");
     }
 
     @Test
@@ -48,7 +48,7 @@ class ConfigTest {
         Config config = new Config(path);
         assertThatThrownBy(config::load)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("All lines must be of the form: key=value");
+                .hasMessage("Line =Alex must be of the form: key=value");
     }
 
     @Test
@@ -57,7 +57,7 @@ class ConfigTest {
         Config config = new Config(path);
         assertThatThrownBy(config::load)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("All lines must be of the form: key=value");
+                .hasMessage("Line = must be of the form: key=value");
     }
 
     @Test
@@ -66,6 +66,6 @@ class ConfigTest {
         Config config = new Config(path);
         assertThatThrownBy(config::load)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("All lines must be of the form: key=value");
+                .hasMessage("Line nameAlex must be of the form: key=value");
     }
 }
