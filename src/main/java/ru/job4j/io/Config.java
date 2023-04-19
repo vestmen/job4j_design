@@ -21,8 +21,12 @@ public class Config {
             in.lines()
                     .filter(a -> !a.isEmpty() && !a.contains("#"))
                     .forEach(a -> {
+                        if (!a.contains("=")) {
+                            throw new IllegalArgumentException(
+                                    String.format("Line %s must be of the form: key=value", a));
+                        }
                         String[] words = a.split("=", 2);
-                        if (!a.contains("=") || checkString(words)) {
+                        if (words[0].isEmpty() || words[1].isEmpty()) {
                             throw new IllegalArgumentException(
                                     String.format("Line %s must be of the form: key=value", a));
                         }
@@ -31,10 +35,6 @@ public class Config {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public boolean checkString(String[] str) {
-        return str[0].isEmpty() || str[1].isEmpty();
     }
 
     public String value(String key) {
