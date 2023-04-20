@@ -13,15 +13,13 @@ public class Analysis {
                             String[] words = a.split(" ");
                             if ((check && (a.contains("400") || a.contains("500")))) {
                                 check = false;
-                                out.print(String.format(words[1] + " ; "));
+                                out.print(String.format("%s ; ", words[1]));
                             }
                             if (!check && (a.contains("200") || a.contains("300"))) {
                                 check = true;
-                                out.print(String.format(words[1] + System.lineSeparator()));
+                                out.print(String.format("%s %s", words[1], System.lineSeparator()));
                             }
                         });
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         } catch (IOException e) {
             e.printStackTrace();
