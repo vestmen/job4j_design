@@ -11,13 +11,9 @@ public class Analysis {
                 in.lines()
                         .forEach(a -> {
                             String[] words = a.split(" ");
-                            if ((check && (a.contains("400") || a.contains("500")))) {
-                                check = false;
-                                out.print(String.format("%s ; ", words[1]));
-                            }
-                            if (!check && (a.contains("200") || a.contains("300"))) {
-                                check = true;
-                                out.print(String.format("%s %s", words[1], System.lineSeparator()));
+                            if ((check == (a.contains("400") || a.contains("500")))) {
+                                out.append(words[1]).append(";").append(check ? "" : System.lineSeparator());
+                                check = !check;
                             }
                         });
             }

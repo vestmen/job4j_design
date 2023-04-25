@@ -26,7 +26,7 @@ class AnalysisTest {
         try (BufferedReader in = new BufferedReader(new FileReader(target))) {
             in.lines().forEach(rsl::append);
         }
-        assertThat("10:57:01 ; 10:59:01 11:01:02 ; 11:02:02 ").isEqualTo(rsl.toString());
+        assertThat("10:57:01;10:59:01;11:01:02;11:02:02;").isEqualTo(rsl.toString());
     }
 
     @Test
@@ -47,6 +47,6 @@ class AnalysisTest {
         try (BufferedReader in = new BufferedReader(new FileReader(target))) {
             in.lines().forEach(rsl::append);
         }
-        assertThat("10:57:01 ; 11:02:02 ").isEqualTo(rsl.toString());
+        assertThat("10:57:01;11:02:02;").isEqualTo(rsl.toString());
     }
 }
