@@ -6,12 +6,6 @@ public class FileProperty {
     private long size;
     private String name;
 
-    @Override
-    public String toString() {
-        return "name='" + name + '\''
-                + "size=" + size;
-    }
-
     public FileProperty(long size, String name) {
         this.size = size;
         this.name = name;
@@ -48,5 +42,11 @@ public class FileProperty {
     @Override
     public int hashCode() {
         return Objects.hash(size, name);
+    }
+
+    @Override
+    public String toString() {
+        return "name='" + name + '\''
+                + "size=" + size;
     }
 }
