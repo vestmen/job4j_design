@@ -17,7 +17,8 @@ public class ArgsName {
 
     private void parse(String[] args) {
         Arrays.stream(args)
-                .map(s -> s.split("-")[1])
+                .filter(ArgsName::validate)
+                .map(s -> s.substring(1))
                 .map(a -> a.split("=", 2))
                 .forEach(m -> values.put(m[0], m[1]));
     }
@@ -26,31 +27,29 @@ public class ArgsName {
         if (args.length == 0) {
             throw new IllegalArgumentException("Arguments not passed to program");
         }
-        Arrays.stream(args)
-                .forEach((a -> {
-                    if (!a.startsWith("-")) {
-                        throw new IllegalArgumentException(
-                                String.format("Error: This argument '%s' does not start with a '-' character", a));
-                    }
-                }));
-        Arrays.stream(args)
-                .map(s -> s.split("-")[1])
-                .forEach((a -> {
-                    if (!a.contains("=")) {
-                        throw new IllegalArgumentException(
-                                String.format("Error: This argument '-%s' does not contain an equal sign", a));
-                    }
-                    String[] words = a.split("=", 2);
-                    if (words[0].isEmpty()) {
-                        throw new IllegalArgumentException(String.format("Error: This argument '-%s' does not contain a key", a));
-                    }
-                    if (words[1].isEmpty()) {
-                        throw new IllegalArgumentException(String.format("Error: This argument '-%s' does not contain a value", a));
-                    }
-                }));
         ArgsName names = new ArgsName();
         names.parse(args);
         return names;
+    }
+
+    public static boolean validate(String arg) {
+        if (!arg.startsWith("-")) {
+            throw new IllegalArgumentException(
+                    String.format("Error: This argument '%s' does not start with a '-' character", arg));
+        }
+        String a = arg.substring(1);
+        if (!a.contains("=")) {
+            throw new IllegalArgumentException(
+                    String.format("Error: This argument '%s' does not contain an equal sign", arg));
+        }
+        String[] words = a.split("=", 2);
+        if (words[0].isEmpty()) {
+            throw new IllegalArgumentException(String.format("Error: This argument '%s' does not contain a key", arg));
+        }
+        if (words[1].isEmpty()) {
+            throw new IllegalArgumentException(String.format("Error: This argument '%s' does not contain a value", arg));
+        }
+        return true;
     }
 
     public static void main(String[] args) {
