@@ -21,17 +21,15 @@ public class ConsoleChat {
 
     public void run() {
         boolean stop = false;
-        while (log.size() <= 1000) {
-            Scanner input = new Scanner(System.in);
-            String ph = input.nextLine();
-            if (OUT.equals(ph)) {
-                log.add(OUT);
-                break;
-            }
-            if (!STOP.equals(ph) && !CONTINUE.equals(ph) && !stop) {
+        Scanner input = new Scanner(System.in);
+        Random random = new Random();
+        List<String> phrases = readPhrases();
+        String ph;
+        do {
+            ph = input.nextLine();
+            if (!STOP.equals(ph) && !CONTINUE.equals(ph) && !OUT.equals(ph) && !stop) {
                 log.add(ph);
-                Random random = new Random();
-                String answer = readPhrases().get(random.nextInt(readPhrases().size()));
+                String answer = phrases.get(random.nextInt(readPhrases().size()));
                 System.out.println(answer);
                 log.add(answer);
             }
@@ -42,9 +40,9 @@ public class ConsoleChat {
             if (CONTINUE.equals(ph)) {
                 stop = false;
                 log.add(CONTINUE);
-                run();
             }
         }
+        while (!OUT.equals(ph));
         saveLog(log);
     }
 
