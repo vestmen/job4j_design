@@ -6,9 +6,10 @@ import java.util.*;
 public class CSVReader {
     public static void handle(ArgsName argsName) throws Exception {
         List<String> lines = new ArrayList<>();
-        var scanner = new Scanner(new FileInputStream(argsName.get("path"))).useDelimiter("\r\n");
-        while (scanner.hasNext()) {
-            lines.add(scanner.next());
+        try (var scanner = new Scanner(new FileInputStream(argsName.get("path"))).useDelimiter("\r\n")) {
+            while (scanner.hasNext()) {
+                lines.add(scanner.next());
+            }
         }
         List<Integer> index = getIndex(lines.get(0), argsName.get("delimiter"), argsName.get("filter"));
         try (PrintWriter out = new PrintWriter(new BufferedOutputStream(new FileOutputStream(argsName.get("out"))))) {
