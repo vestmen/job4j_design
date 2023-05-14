@@ -1,0 +1,9 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<student goldMedal="false" name="Ivan Ivanov" age="30">
+    <passport id="3814 256487"/>
+    <subjects>
+        <subject>Mathematics</subject>
+        <subject>Literature</subject>
+        <subject>Probability theory</subject>
+    </subjects>
+</student>
