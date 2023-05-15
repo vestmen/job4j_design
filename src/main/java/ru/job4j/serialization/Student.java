@@ -24,6 +24,18 @@ public class Student {
     public Student() {
     }
 
+    public boolean isGoldMedal() {
+        return goldMedal;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
     public Student(boolean goldMedal, String name, int age, Passport passport, String[] subjects) {
         this.goldMedal = goldMedal;
         this.name = name;
