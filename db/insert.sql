@@ -1,0 +1,11 @@
+insert into roles(name) values ('admin');
+insert into rules(name) values ('create');
+insert into rules(name) values ('read');
+insert into roles_rules(roles_id, rules_id) values (1, 1);
+insert into roles_rules(roles_id, rules_id) values (1, 2);
+insert into users(name, roles_id) values ('Ivan Ivanov', 1);
+insert into states(name) values ('active');
+insert into categories(name) values ('red');
+insert into items(name, user_id, categories_id, states_id) values ('Read', 1, 1, 1);
+insert into comments(name, item_id) values ('Comment 1', 1);
+insert into attachs(name, item_id) values ('Attach 1', 1);
