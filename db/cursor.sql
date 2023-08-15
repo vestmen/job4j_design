@@ -42,4 +42,5 @@ MOVE BACKWARD 4 FROM cursor_products;
 FETCH PRIOR FROM cursor_products;
 
 FETCH PRIOR FROM cursor_products;
+CLOSE cursor_products;
 COMMIT;
